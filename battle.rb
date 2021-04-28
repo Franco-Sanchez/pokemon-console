@@ -1,7 +1,8 @@
 require_relative "prompt"
 
 class Battle
-  def initialize # (complete this)
+  # (complete this)
+  def initialize
     # Complete this
   end
 

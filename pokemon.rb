@@ -3,7 +3,8 @@ require_relative "pokedex"
 class Pokemon
   include Pokedex
 
-  def initialize # (complete this)
+  # (complete this)
+  def initialize
     # Retrieve pokemon info from Pokedex and set instance variables
     # Calculate Individual Values and store them in instance variable
     # Create instance variable with effort values. All set to 0
@@ -48,7 +49,8 @@ class Pokemon
   def increase_stats(target)
     # Increase stats base on the defeated pokemon and print message "#[pokemon name] gained [amount] experience points"
 
-    # If the new experience point are enough to level up, do it and print message "#[pokemon name] reached level [level]!"
+    # If the new experience point are enough to level up, do it and print message:
+    # "#[pokemon name] reached level [level]!"
     # -- Re-calculate the stat
   end
 

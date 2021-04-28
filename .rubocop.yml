@@ -45,6 +45,9 @@ Style/GlobalVars:
 Metrics/MethodLength:
   Max: 16
 
+Metrics/ModuleLength:
+  Max: 300
+
 # Metrics/AbcSize:
 #   Enabled: false
 

@@ -2,7 +2,8 @@ require_relative "pokemon"
 require_relative "prompt"
 
 class Player
-  def initialize # (Complete this)
+  # (Complete this)
+  def initialize
     # Complete this
   end
 
