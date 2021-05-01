@@ -7,7 +7,7 @@ class Player
   def initialize(name, pokemon_specie, pokemon_name = nil)
     @name = name
     @pokemon_specie = Pokemon.new(pokemon_specie)
-    @pokemon_name = pokemon_name
+    @pokemon_name = pokemon_name || pokemon_specie
   end
 
   def select_move

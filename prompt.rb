@@ -81,16 +81,17 @@ module Prompt
   end
 
   class Fight
-    def self.with_random(player, bot)
+    def self.rival_message(player, bot)
+      rival_name = bot ? bot.name : "Brock"
+      pokemon_rival = bot ? bot.pokemon_name : "Onix"
+      pokemon__rival_level = bot ? bot.pokemon_specie.level : 10
       puts
-      puts "#{player.name} challenge #{bot.name} for training"
-      puts "#{bot.name} has a Onix level 4" # el pokemon y el level es aleatorio
-    end
-
-    def self.with_leader(player)
-      puts
-      puts "#{player.name} challenge the Gym Leader Brock for a fight!"
-      puts "Brock has a Onix level 10"
+      if bot
+        puts "#{player.name} challenge #{bot.name} for training"
+      else
+        puts "#{player.name} challenge the Gym Leader Brock for a fight!"
+      end
+      puts "#{rival_name} has a #{pokemon_rival} level #{pokemon__rival_level}"
     end
 
     def self.options
@@ -98,6 +99,15 @@ module Prompt
       puts
       puts "1. Fight        2. Leave"
       print "> "
+    end
+
+    def self.start_fight(player, bot)
+      rival_name = bot ? bot.name : "Brock"
+      pokemon_rival = bot ? bot.pokemon_name.upcase : "Onix".upcase
+      puts
+      puts "#{rival_name} sent out #{pokemon_rival}!"
+      puts "#{player.name} sent out #{player.pokemon_name.upcase}!"
+      puts "-------------------Battle Start!-------------------"
     end
   end
 end

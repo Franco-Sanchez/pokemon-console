@@ -13,7 +13,7 @@ class Battle
 
   def start
     # Prepare the Battle (print messages and prepare pokemons)
-    @type_fight == "train" ? Fight.with_random(@player, @bot) : Fight.with_leader(@player)
+    Fight.rival_message(@player, @bot)
     selected_action
 
     # Until one pokemon faints
@@ -29,6 +29,10 @@ class Battle
 
     # Check which player won and print messages
     # If the winner is the Player increase pokemon stats
+  end
+
+  def fight
+    Fight.start_fight(@player, @bot)
   end
 
   private
