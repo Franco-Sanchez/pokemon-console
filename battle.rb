@@ -1,12 +1,21 @@
-# require_relative "prompt"
+require_relative "prompt"
 
 class Battle
   # (complete this)
-  def initialize
+  def initialize(player, rival)
+    @player = player
+    @rival = rival
     # Complete this
   end
 
   def start
+    puts
+    puts "#{@player.name} challenge Random Person for training"
+    puts "Random Person has a Onix level 4"
+    puts "What do you want to do now?"
+    puts
+    puts "1. Fight        2. Leave"
+    print "> "
     # Prepare the Battle (print messages and prepare pokemons)
 
     # Until one pokemon faints

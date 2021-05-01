@@ -3,8 +3,10 @@ require_relative "pokedex"
 class Pokemon
   include Pokedex
 
-  # (complete this)
-  def initialize
+  attr_reader :species, :type, :level, :hp, :attack, :defense,
+              :special_attack, :special_defense, :speed, :experience
+
+  def initialize(pokemon_specie)
     # Retrieve pokemon info from Pokedex and set instance variables
     # Calculate Individual Values and store them in instance variable
     # Create instance variable with effort values. All set to 0
@@ -12,6 +14,18 @@ class Pokemon
     # If level is 1, set experience points to 0 in instance variable.
     # If level is not 1, calculate the minimum experience point for that level and store it in instance variable.
     # Calculate pokemon stats and store them in instance variable
+    pokemon = pokemon_method(pokemon_specie)
+    base_stats = base_stats_method(pokemon_specie)
+    @species = pokemon[:species]
+    @level = pokemon[:level]
+    @type = pokemon[:type]
+    @hp = base_stats[:hp]
+    @attack = base_stats[:attack]
+    @defense = base_stats[:defense]
+    @special_attack = base_stats[:special_attack]
+    @special_defense = base_stats[:special_defense]
+    @speed = base_stats[:speed]
+    @experience = base_stats[:experience]
   end
 
   def prepare_for_battle
@@ -30,7 +44,7 @@ class Pokemon
     # Complete this
   end
 
-  def attack(target)
+  def battle_attack(target)
     # Print attack message 'Tortuguita used MOVE!'
     # Accuracy check
     # If the movement is not missed
@@ -54,6 +68,21 @@ class Pokemon
     # -- Re-calculate the stat
   end
 
-  # private methods:
-  # Create here auxiliary methods
+  private
+
+  def pokemon_method(pokemon_specie)
+    pokemon = POKEMONS[pokemon_specie.to_s]
+    level = 1
+    arr_type = pokemon[:type]
+    type = arr_type.length > 1 ? arr_type.join(", ") : arr_type.first
+    { species: pokemon[:species], level: level, type: type }
+  end
+
+  def base_stats_method(pokemon_specie)
+    base_stats = POKEMONS[pokemon_specie.to_s][:base_stats]
+    experience = 0
+    { hp: base_stats[:hp], attack: base_stats[:attack], defense: base_stats[:defense],
+      special_attack: base_stats[:special_attack], special_defense: base_stats[:special_defense],
+      speed: base_stats[:speed], experience: experience }
+  end
 end
