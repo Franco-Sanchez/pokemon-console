@@ -1,4 +1,4 @@
-require_relative "prompt"
+# require_relative "prompt"
 
 class Battle
   # (complete this)
