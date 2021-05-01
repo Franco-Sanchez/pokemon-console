@@ -1,22 +1,20 @@
 require_relative "prompt"
 
 class Battle
-  # (complete this)
-  def initialize(player, rival)
+  include Prompt
+
+  attr_reader :type_fight, :player, :bot
+
+  def initialize(type_fight, player, bot = nil)
+    @type_fight = type_fight
     @player = player
-    @rival = rival
-    # Complete this
+    @bot = bot
   end
 
   def start
-    puts
-    puts "#{@player.name} challenge Random Person for training"
-    puts "Random Person has a Onix level 4"
-    puts "What do you want to do now?"
-    puts
-    puts "1. Fight        2. Leave"
-    print "> "
     # Prepare the Battle (print messages and prepare pokemons)
+    @type_fight == "train" ? Fight.with_random(@player, @bot) : Fight.with_leader(@player)
+    selected_action
 
     # Until one pokemon faints
     # --Print Battle Status
@@ -31,5 +29,23 @@ class Battle
 
     # Check which player won and print messages
     # If the winner is the Player increase pokemon stats
+  end
+
+  private
+
+  def menu
+    Fight.options
+    gets.chomp
+  end
+
+  def selected_action
+    action = menu
+    until action.downcase == "leave"
+      case action.downcase
+      when "fight"
+        fight
+      end
+      action = menu
+    end
   end
 end

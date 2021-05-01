@@ -14,15 +14,16 @@ class Game
   end
 
   def train
-    Battle.new(@player, "train").start
+    bot = Bot.new("Random Person", "Onix") # pokemon hardcodeado
+    Battle.new("train", @player, bot).start
   end
 
   def challenge_leader
-    Battle.new(@player, "leader").start
+    Battle.new("leader", @player).start
   end
 
   def show_stats
-    Stats.new.show_stats_message(@player.pokemon_name, @player.pokemon_specie)
+    Stats.show_stats_message(@player.pokemon_name, @player.pokemon_specie)
   end
 
   def menu
@@ -51,14 +52,12 @@ class Game
       case action.downcase
       when "train"
         train
-        action = menu
       when "leader"
         challenge_leader
-        action = menu
       when "stats"
         show_stats
-        action = menu
       end
+      action = menu
     end
   end
 end

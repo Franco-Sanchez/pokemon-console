@@ -57,7 +57,7 @@ module Prompt
   end
 
   class Stats
-    def show_stats_message(pokemon_name, pokemon_specie)
+    def self.show_stats_message(pokemon_name, pokemon_specie)
       puts
       puts "#{pokemon_name}:"
       puts "Kind: #{pokemon_specie.species}"
@@ -66,9 +66,7 @@ module Prompt
       stats_data(pokemon_specie)
     end
 
-    private
-
-    def stats_data(pokemon_specie)
+    def self.stats_data(pokemon_specie)
       puts "Stats:"
       puts "HP: #{pokemon_specie.hp}"
       puts "Attack: #{pokemon_specie.attack}"
@@ -77,6 +75,29 @@ module Prompt
       puts "Special Defense: #{pokemon_specie.special_defense}"
       puts "Speed: #{pokemon_specie.speed}"
       puts "Experience Points: #{pokemon_specie.experience}"
+    end
+
+    private_class_method :stats_data
+  end
+
+  class Fight
+    def self.with_random(player, bot)
+      puts
+      puts "#{player.name} challenge #{bot.name} for training"
+      puts "#{bot.name} has a Onix level 4" # el pokemon y el level es aleatorio
+    end
+
+    def self.with_leader(player)
+      puts
+      puts "#{player.name} challenge the Gym Leader Brock for a fight!"
+      puts "Brock has a Onix level 10"
+    end
+
+    def self.options
+      puts "What do you want to do now?"
+      puts
+      puts "1. Fight        2. Leave"
+      print "> "
     end
   end
 end
