@@ -4,22 +4,26 @@ require_relative "pokedex"
 require_relative "prompt"
 
 class Game
+  include Pokedex
   include Prompt
 
   def start
     player_data = welcome
-    @player = Player.new(player_data[:name], player_data[:pokemon_specie], player_data[:pokemon_name])
+    @player = Player.new(player_data[:name], "user", player_data[:pokemon_specie],
+                         player_data[:pokemon_name])
     selected_action
     goodbye
   end
 
   def train
-    bot = Bot.new("Random Person", "Onix") # pokemon hardcodeado
-    Battle.new("train", @player, bot).start
+    pokemon_random = POKEMONS.keys.sample
+    bot = Bot.new("Random Person", "random", pokemon_random)
+    Battle.new(@player, bot).start
   end
 
   def challenge_leader
-    Battle.new("leader", @player).start
+    leader = Bot.new("Brock", "leader", "Onix")
+    Battle.new(@player, leader).start
   end
 
   def show_stats

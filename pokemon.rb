@@ -3,10 +3,10 @@ require_relative "pokedex"
 class Pokemon
   include Pokedex
 
-  attr_reader :species, :type, :level, :hp, :attack, :defense,
-              :special_attack, :special_defense, :speed, :experience
+  attr_reader :species, :type, :base_exp, :effort_points, :growth_rate, :base_stats,
+              :moves, :effort_values, :level, :points_exp, :current_hp
 
-  def initialize(pokemon_specie)
+  def initialize(pokemon_specie, character)
     # Retrieve pokemon info from Pokedex and set instance variables
     # Calculate Individual Values and store them in instance variable
     # Create instance variable with effort values. All set to 0
@@ -15,17 +15,17 @@ class Pokemon
     # If level is not 1, calculate the minimum experience point for that level and store it in instance variable.
     # Calculate pokemon stats and store them in instance variable
     pokemon = pokemon_method(pokemon_specie)
-    base_stats = base_stats_method(pokemon_specie)
     @species = pokemon[:species]
-    @level = pokemon[:level]
     @type = pokemon[:type]
-    @hp = base_stats[:hp]
-    @attack = base_stats[:attack]
-    @defense = base_stats[:defense]
-    @special_attack = base_stats[:special_attack]
-    @special_defense = base_stats[:special_defense]
-    @speed = base_stats[:speed]
-    @experience = base_stats[:experience]
+    @base_exp = pokemon[:base_exp]
+    @effort_points = pokemon[:effort_points]
+    @growth_rate = pokemon[:growth_rate]
+    @base_stats = pokemon[:base_stats]
+    @moves = pokemon[:moves]
+    @effort_values = { hp: 0, attack: 0, defense: 0, special_attack: 0, special_defense: 0, speed: 0 }
+    @level = retrieve_level(character)
+    @points_exp = 0
+    @current_hp = @effort_values[:hp]
   end
 
   def prepare_for_battle
@@ -70,19 +70,21 @@ class Pokemon
 
   private
 
-  def pokemon_method(pokemon_specie)
-    pokemon = POKEMONS[pokemon_specie.to_s]
-    level = 1
-    arr_type = pokemon[:type]
-    type = arr_type.length > 1 ? arr_type.join(", ") : arr_type.first
-    { species: pokemon[:species], level: level, type: type }
+  def retrieve_level(character)
+    case character
+    when "user"
+      1
+    when "random"
+      rand(1..10)
+    when "leader"
+      10
+    end
   end
 
-  def base_stats_method(pokemon_specie)
-    base_stats = POKEMONS[pokemon_specie.to_s][:base_stats]
-    experience = 0
-    { hp: base_stats[:hp], attack: base_stats[:attack], defense: base_stats[:defense],
-      special_attack: base_stats[:special_attack], special_defense: base_stats[:special_defense],
-      speed: base_stats[:speed], experience: experience }
+  def pokemon_method(pokemon_specie)
+    pokemon = POKEMONS[pokemon_specie.to_s]
+    { species: pokemon[:species], type: pokemon[:type], base_exp: pokemon[:base_exp],
+      effort_points: pokemon[:effort_points], growth_rate: pokemon[:growth_rate],
+      base_stats: pokemon[:base_stats], moves: pokemon[:moves] }
   end
 end

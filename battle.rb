@@ -3,17 +3,16 @@ require_relative "prompt"
 class Battle
   include Prompt
 
-  attr_reader :type_fight, :player, :bot
+  attr_reader :player, :rival
 
-  def initialize(type_fight, player, bot = nil)
-    @type_fight = type_fight
+  def initialize(player, rival)
     @player = player
-    @bot = bot
+    @rival = rival
   end
 
   def start
     # Prepare the Battle (print messages and prepare pokemons)
-    Fight.rival_message(@player, @bot)
+    Fight.rival_message(@player, @rival)
     selected_action
 
     # Until one pokemon faints
@@ -32,7 +31,7 @@ class Battle
   end
 
   def fight
-    Fight.start_fight(@player, @bot)
+    Fight.start_fight(@player, @rival)
   end
 
   private

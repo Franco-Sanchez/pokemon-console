@@ -2,11 +2,12 @@ require_relative "pokemon"
 require_relative "prompt"
 
 class Player
-  attr_reader :name, :pokemon_specie, :pokemon_name
+  attr_reader :name, :character, :pokemon_specie, :pokemon_name
 
-  def initialize(name, pokemon_specie, pokemon_name = nil)
+  def initialize(name, character, pokemon_specie, pokemon_name = nil)
     @name = name
-    @pokemon_specie = Pokemon.new(pokemon_specie)
+    @character = character
+    @pokemon_specie = Pokemon.new(pokemon_specie, character)
     @pokemon_name = pokemon_name || pokemon_specie
   end
 

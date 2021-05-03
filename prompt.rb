@@ -58,40 +58,40 @@ module Prompt
 
   class Stats
     def self.show_stats_message(pokemon_name, pokemon_specie)
+      transform_type = pokemon_specie.type.length > 1 ? pokemon_specie.type.join(", ") : pokemon_specie.type.first
       puts
       puts "#{pokemon_name}:"
       puts "Kind: #{pokemon_specie.species}"
       puts "Level: #{pokemon_specie.level}"
-      puts "Type: #{pokemon_specie.type}"
+      puts "Type: #{transform_type}"
       stats_data(pokemon_specie)
     end
 
     def self.stats_data(pokemon_specie)
+      effort_values = pokemon_specie.effort_values
       puts "Stats:"
-      puts "HP: #{pokemon_specie.hp}"
-      puts "Attack: #{pokemon_specie.attack}"
-      puts "Defense: #{pokemon_specie.defense}"
-      puts "Special Attack: #{pokemon_specie.special_attack}"
-      puts "Special Defense: #{pokemon_specie.special_defense}"
-      puts "Speed: #{pokemon_specie.speed}"
-      puts "Experience Points: #{pokemon_specie.experience}"
+      puts "HP: #{effort_values[:hp]}"
+      puts "Attack: #{effort_values[:attack]}"
+      puts "Defense: #{effort_values[:defense]}"
+      puts "Special Attack: #{effort_values[:special_attack]}"
+      puts "Special Defense: #{effort_values[:special_defense]}"
+      puts "Speed: #{effort_values[:speed]}"
+      puts "Experience Points: #{pokemon_specie.points_exp}"
     end
 
     private_class_method :stats_data
   end
 
   class Fight
-    def self.rival_message(player, bot)
-      rival_name = bot ? bot.name : "Brock"
-      pokemon_rival = bot ? bot.pokemon_name : "Onix"
-      pokemon__rival_level = bot ? bot.pokemon_specie.level : 10
+    def self.rival_message(player, rival)
+      pokemon_rival_level = rival.pokemon_specie.level
       puts
-      if bot
-        puts "#{player.name} challenge #{bot.name} for training"
+      if rival.character == "random"
+        puts "#{player.name} challenge #{rival.name} for training"
       else
-        puts "#{player.name} challenge the Gym Leader Brock for a fight!"
+        puts "#{player.name} challenge the Gym Leader #{rival.name} for a fight!"
       end
-      puts "#{rival_name} has a #{pokemon_rival} level #{pokemon__rival_level}"
+      puts "#{rival.name} has a #{rival.pokemon_name} level #{pokemon_rival_level}"
     end
 
     def self.options
@@ -101,11 +101,9 @@ module Prompt
       print "> "
     end
 
-    def self.start_fight(player, bot)
-      rival_name = bot ? bot.name : "Brock"
-      pokemon_rival = bot ? bot.pokemon_name.upcase : "Onix".upcase
+    def self.start_fight(player, rival)
       puts
-      puts "#{rival_name} sent out #{pokemon_rival}!"
+      puts "#{rival.name} sent out #{rival.pokemon_name.upcase}!"
       puts "#{player.name} sent out #{player.pokemon_name.upcase}!"
       puts "-------------------Battle Start!-------------------"
     end
